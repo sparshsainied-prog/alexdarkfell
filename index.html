@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Alex Darkfell | Mask of the Hare</title>
+<meta name="description" content="Mask of the Hare, a folk horror novella by Alex Darkfell, with a cover cut by hand in lino.">
+<meta property="og:title" content="A homepage for Alex Darkfell, made by Sparsh Saini">
+<meta property="og:description" content="A homepage idea for Alex Darkfell and Mask of the Hare, made by Sparsh Saini. Not the official site.">
+<meta property="og:image" content="https://sparshsainied-prog.github.io/alexdarkfell/img/og.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23f4f2ec'/><path d='M16 27c-6 0-8-5-7-10 1-4 3-6 5-7l-3-7 5 6 3-6-1 7c3 2 5 5 5 9 0 5-3 8-7 8z' fill='%23161513'/><circle cx='14' cy='15' r='1.4' fill='%23f4f2ec'/><circle cx='18.5' cy='14' r='1.4' fill='%23f4f2ec'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/block.jpg" fetchpriority="high">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+/* Colours are lifted from the Mask of the Hare cover and Alex's own lino prints: the black
+   ink, the white paper, the grey of the cut block, the oxblood red of the title. */
+:root {
+  --ink: #161513;
+  --ink-2: #22201d;
+  --paper: #f4f2ec;
+  --paper-2: #d9d5cb;
+  --lino: #b4b0a8;
+  --blood: #831e1f;
+  --blood-2: #b0383a;
+  --display: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  --text: "EB Garamond", Garamond, Georgia, serif;
+  --gutter: clamp(1rem, 5vw, 4rem);
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ink); color: var(--paper); font-family: var(--text); font-size: 1.22rem; line-height: 1.58; overflow-x: hidden; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+.wrap { max-width: 68rem; margin: 0 auto; padding: 0 var(--gutter); }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; line-height: 1; letter-spacing: .01em; }
+p { margin: 0 0 1rem; }
+:focus-visible { outline: 2px solid var(--blood-2); outline-offset: 3px; }
+
+/* Buttons: printed labels, red small caps on paper, a hard ink edge */
+.btn { display: inline-block; padding: .5rem 1.1rem .55rem; background: var(--paper); color: var(--blood); border: 1.5px solid var(--ink); font-family: var(--display); font-weight: 600; font-size: 1.2rem; line-height: 1.1; text-decoration: none; letter-spacing: .03em; }
+.btn:hover, .btn:focus-visible { background: var(--blood); color: var(--paper); }
+.btn.ghost { background: transparent; color: var(--paper); border-color: var(--paper-2); }
+.btn.ghost:hover, .btn.ghost:focus-visible { background: var(--paper); color: var(--ink); }
+.btns { display: flex; flex-wrap: wrap; gap: .8rem 1rem; align-items: center; }
+.quiet { text-underline-offset: .25em; text-decoration-thickness: 1px; }
+.quiet:hover, .quiet:focus-visible { color: var(--blood-2); }
+
+/* Who made this, before anything else */
+.top { position: absolute; z-index: 20; top: 0; left: 0; right: 0; }
+.made { margin: 0; padding: .45rem var(--gutter); background: #0d0c0b; color: var(--paper-2); font-size: 1rem; line-height: 1.35; text-align: center; }
+.name { display: block; padding: .8rem var(--gutter); font-family: var(--display); font-weight: 600; font-size: 1.6rem; letter-spacing: .08em; color: var(--paper); text-decoration: none; }
+
+/* Hero: Alex's own lino block, inked. Scroll, a sheet comes down on it, and peels back off
+   with the print on it, the print that became the cover. His title goes on last, the way
+   he added it after printing. Transform and opacity only, from one scroll handler. */
+.hero { position: relative; height: 100svh; min-height: 38rem; }
+.js .hero { height: 380svh; }
+.js.still .hero { height: 100svh; }
+.stage { position: sticky; top: 0; height: 100svh; min-height: 38rem; overflow: hidden; background: var(--ink); perspective: 2200px; }
+.block, .sheet { position: absolute; left: 0; top: 0; aspect-ratio: 2 / 3; transform-origin: 0 0; }
+.block { will-change: transform, opacity; box-shadow: 0 0 0 .5rem #0e0d0c, 0 2rem 4rem rgba(0, 0, 0, .6); }
+.block img { width: 100%; height: 100%; }
+.sheet { transform-style: preserve-3d; will-change: transform, opacity; opacity: 0; }
+.face { position: absolute; inset: 0; }
+.js .face.print { opacity: 0; }
+.face img { width: 100%; height: 100%; }
+.face.print { container-type: inline-size; box-shadow: 0 1.6rem 3.4rem rgba(0, 0, 0, .55); }
+.print .t { position: absolute; left: 4.4%; top: 5.7%; margin: 0; font-family: var(--display); font-weight: 500; font-size: 8.15cqw; text-shadow: 0 0 .12em var(--paper), 0 0 .2em var(--paper); line-height: 1; color: var(--blood); white-space: nowrap; letter-spacing: .005em; will-change: opacity; }
+.print .t span { font-size: .84em; }
+.print .a { position: absolute; right: 5.6%; top: 94.9%; margin: 0; font-family: var(--display); font-weight: 600; font-size: 2.9cqw; letter-spacing: .2em; text-shadow: 0 0 .2em var(--paper); color: var(--blood); will-change: opacity; }
+.js .print .t, .js .print .t span { font-size: .84em; }
+.print .a { opacity: 0; }
+
+.confess { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 8svh; max-width: 34rem; margin: 0; padding: 1.1rem 1.3rem; background: rgba(22, 21, 19, .9); border-left: 3px solid var(--blood); font-style: italic; font-size: clamp(1.45rem, 3.2vw, 2.1rem); line-height: 1.3; will-change: transform, opacity; }
+.confess span { display: block; margin-top: .5rem; font-style: normal; font-size: 1rem; color: var(--paper-2); }
+
+.copy { position: absolute; will-change: transform, opacity; }
+.js .copy { opacity: 0; }
+.copy h1 { font-size: clamp(2.8rem, 5vw, 4.4rem); color: var(--paper); margin-bottom: .4rem; }
+.copy .kind { font-style: italic; color: var(--paper-2); margin-bottom: 1.2rem; font-size: 1.25rem; }
+.copy .line { font-size: 1.25rem; max-width: 28rem; margin-bottom: 1.6rem; }
+.fallback { display: none; }
+html:not(.js) .block, html:not(.js) .sheet, html:not(.js) .confess { display: none; }
+html:not(.js) .fallback { display: block; position: absolute; left: 50%; top: 52%; height: 70svh; width: auto; transform: translate(-50%, -50%); }
+
+/* Contents, set like the contents page of a book */
+.contents { padding: clamp(3.5rem, 8vw, 5.5rem) 0; background: var(--paper); color: var(--ink); }
+.contents h2 { font-size: clamp(2.2rem, 4vw, 3rem); color: var(--blood); margin-bottom: 1.4rem; }
+.contents ol { list-style: none; padding: 0; margin: 0; max-width: 40rem; counter-reset: c; }
+.contents li { counter-increment: c; }
+.contents a { display: flex; gap: 1rem; align-items: baseline; padding: .55rem 0; text-decoration: none; font-size: 1.35rem; border-bottom: 1px solid var(--paper-2); }
+.contents a::before { content: counter(c, upper-roman); font-family: var(--display); color: var(--blood); min-width: 2.2rem; }
+.contents a span { margin-left: auto; font-style: italic; font-size: 1.05rem; color: #6d675d; }
+.contents a:hover, .contents a:focus-visible { color: var(--blood); }
+
+.band { padding: clamp(4.5rem, 10vw, 8rem) 0; }
+h2 { font-size: clamp(2.6rem, 5.4vw, 4.2rem); margin-bottom: 1.5rem; text-wrap: balance; }
+.book .grid { display: grid; grid-template-columns: minmax(0, 17rem) minmax(0, 1fr); gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+.book .cv { box-shadow: 0 1.4rem 3rem rgba(0, 0, 0, .55); }
+.blurb { max-width: 38rem; }
+.blurb .open { font-style: italic; font-size: 1.5rem; line-height: 1.35; color: var(--paper); }
+.said { margin: 2.2rem 0; padding: 0; list-style: none; border-top: 1px solid rgba(217, 213, 203, .25); }
+.said li { padding: 1rem 0; border-bottom: 1px solid rgba(217, 213, 203, .25); font-style: italic; }
+.said li span { display: block; font-style: normal; font-size: 1rem; color: var(--paper-2); margin-top: .3rem; }
+
+.stories { background: var(--ink-2); }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2.5rem, 6vw, 5rem); }
+.pair .t2 { display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr); gap: 1.4rem; align-items: start; }
+.pair h3 { font-size: 1.9rem; margin-bottom: .5rem; }
+.pair p { font-size: 1.1rem; }
+.pair .story { font-style: italic; color: var(--paper-2); }
+.stories .note { margin-top: 3rem; max-width: 40rem; font-size: 1.35rem; line-height: 1.4; }
+
+.about .grid { display: grid; grid-template-columns: minmax(0, 17rem) minmax(0, 36rem); gap: clamp(2rem, 6vw, 5rem); align-items: center; }
+.about img { filter: grayscale(1) contrast(1.1); }
+.about .big { font-size: clamp(1.4rem, 2.4vw, 1.8rem); line-height: 1.38; }
+
+.pulled { background: var(--paper); color: var(--ink); }
+.pulled h2 { color: var(--blood); }
+.pulled .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+.pulled .his { font-style: italic; font-size: 1.5rem; line-height: 1.35; margin-bottom: 1.6rem; }
+.pulled .his span { display: block; font-style: normal; font-size: 1rem; color: #6d675d; margin-top: .4rem; }
+.shop { list-style: none; padding: 0; margin: 0 0 1.8rem; border-top: 1.5px solid var(--ink); }
+.shop a { display: flex; justify-content: space-between; gap: 1rem; padding: .8rem 0; border-bottom: 1px solid var(--paper-2); text-decoration: none; }
+.shop a b { font-weight: 500; }
+.shop a span { white-space: nowrap; color: var(--blood); font-family: var(--display); font-weight: 600; font-size: 1.3rem; }
+.shop a:hover b, .shop a:focus-visible b { color: var(--blood); }
+.pulled .yalc { margin-top: 2.4rem; padding-top: 1.6rem; border-top: 1.5px solid var(--ink); font-size: 1.35rem; line-height: 1.4; }
+.pulled .yalc b { font-family: var(--display); font-weight: 600; color: var(--blood); }
+.pulled .btn { border-color: var(--blood); }
+
+footer { padding: 2.2rem 0 2.6rem; background: #0d0c0b; color: var(--paper-2); font-size: 1rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: .8rem 2rem; justify-content: space-between; }
+footer p { margin: 0; }
+
+@media (max-width: 760px) {
+  body { font-size: 1.12rem; }
+  .name { font-size: 1.35rem; }
+  .confess { bottom: 6svh; font-size: 1.4rem; }
+  .copy { text-align: center; }
+  .copy h1, .copy .kind { display: none; }
+  .copy .line { margin: 0 auto 1rem; font-size: 1.1rem; }
+  .copy .btns { justify-content: center; }
+  .book .grid, .pair, .about .grid, .pulled .grid { grid-template-columns: minmax(0, 1fr); }
+  .book .cv { max-width: 13rem; }
+  .pair .t2 { grid-template-columns: minmax(0, 7rem) minmax(0, 1fr); }
+  .about img { max-width: 13rem; }
+  .contents a { font-size: 1.15rem; }
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <p class="made">A homepage idea made by Sparsh Saini for Alex Darkfell. Not their official site.</p>
+  <a class="name" href="#">Alex Darkfell</a>
+</div>
+
+<main>
+<section class="hero" aria-label="Mask of the Hare">
+  <div class="stage">
+    <div class="block"><img src="img/block.jpg" alt="Alex Darkfell's inked lino block for the Mask of the Hare cover, the hare cut in reverse" width="1024" height="1536" fetchpriority="high"></div>
+    <div class="sheet" aria-hidden="true">
+      <div class="face back"><img src="img/sheet-back.jpg" alt="" width="1024" height="1536"></div>
+      <div class="face print">
+        <img src="img/print.jpg" alt="" width="1024" height="1536">
+        <p class="t">MASK <span>of the</span> HARE</p>
+        <p class="a">ALEX DARKFELL</p>
+      </div>
+    </div>
+    <img class="fallback" src="img/mask-of-the-hare.jpg" alt="Mask of the Hare by Alex Darkfell" width="640" height="960">
+
+    <p class="confess">"My name is Tamsin Bray, and this is my confession..."<span>Mask of the Hare</span></p>
+
+    <div class="copy">
+      <h1>Mask of the Hare</h1>
+      <p class="kind">A folk horror novella</p>
+      <p class="line">When Tamsin Bray's grandmother dies, she leaves behind a chest containing a single item: a carved mask in the shape of a hare.</p>
+      <div class="btns">
+        <a class="btn" href="https://www.darkfellwrites.com/product-page/mask-of-the-hare-signed-paperback">Signed copy</a>
+        <a class="btn ghost" href="https://www.amazon.co.uk/dp/B0HDSJQ9BC">Amazon</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<nav class="contents" aria-label="Contents">
+  <div class="wrap">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#hare">Mask of the Hare <span>the novella</span></a></li>
+      <li><a href="#stories">Epiphany and Midnight <span>short stories</span></a></li>
+      <li><a href="#about">Alex <span>ten minutes from Stonehenge</span></a></li>
+      <li><a href="#pulled">Pulled by hand <span>signed books and prints</span></a></li>
+    </ol>
+  </div>
+</nav>
+
+<section class="band book" id="hare">
+  <div class="wrap grid">
+    <img class="cv" src="img/mask-of-the-hare.jpg" alt="Mask of the Hare cover: a wild black hare cut in lino, white lines bursting out around it" width="640" height="960" loading="lazy">
+    <div class="blurb">
+      <h2>Mask of the Hare</h2>
+      <p class="open">"My name is Tamsin Bray, and this is my confession..."</p>
+      <p>When Tamsin Bray's grandmother dies, she leaves behind a chest containing a single item: a carved mask in the shape of a hare.</p>
+      <p>The mask shows Tamsin the truth she has never been told, and a burden she must carry to right past wrongs.</p>
+      <p>This is the story of what happened. This is also the story of what Tamsin had to become, for all who wish to know the truth.</p>
+      <ul class="said">
+        <li>"A really unique story of witchcraft, female empowerment and bloody revenge."<span>Amy Harrison-Smith, Goodreads</span></li>
+        <li>"There is a lyrical feel to this folk horror story that I was hooked for the very start."<span>Gigglesley Reads, Goodreads</span></li>
+      </ul>
+      <div class="btns">
+        <a class="btn" href="https://www.darkfellwrites.com/product-page/mask-of-the-hare-signed-paperback">Signed paperback, £10</a>
+        <a class="btn ghost" href="https://www.amazon.co.uk/dp/B0HDSJQ9BC">Amazon</a>
+        <a class="btn ghost" href="https://books2read.com/u/3nwQee">Other stores</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band stories" id="stories">
+  <div class="wrap">
+    <h2>Folklore, reimagined</h2>
+    <div class="pair">
+      <article class="t2">
+        <img src="img/epiphany.jpg" alt="Epiphany and More cover: a raven on deep blue" width="560" height="896" loading="lazy">
+        <div>
+          <h3>Epiphany and More</h3>
+          <p>Thirteen short stories. Cornish, Norse and Japanese myth, re-imagined.</p>
+          <p class="story">"Of Ivy and Teeth": two schoolgirls step into a forest clearing in search of the Green Bride. How many will walk out?</p>
+          <a class="btn ghost" href="https://www.darkfellwrites.com/books/epiphany-and-more">Signed, £12.50</a>
+        </div>
+      </article>
+      <article class="t2">
+        <img src="img/midnight.jpg" alt="Midnight and Other Short Stories cover: a black cat with yellow eyes" width="560" height="836" loading="lazy">
+        <div>
+          <h3>Midnight and Other Short Stories</h3>
+          <p>Fourteen stories where folklore and myth collide with the modern world.</p>
+          <p class="story">"Midnight": a witch's black cat overhears a plan to cast The Night Spell, and has to rally the city's magical creatures to stop it.</p>
+          <a class="btn ghost" href="https://www.darkfellwrites.com/books/midnight-and-other-short-stories">Signed, £10</a>
+        </div>
+      </article>
+    </div>
+    <p class="note">Every story opens with a note from me on where it came from. Readers on Goodreads keep bringing those notes up.</p>
+  </div>
+</section>
+
+<section class="band about" id="about">
+  <div class="wrap grid">
+    <img src="img/alex.jpg" alt="Alex Darkfell outdoors in a cap and sunglasses" width="600" height="690" loading="lazy">
+    <div>
+      <h2>Hi, I'm Alex</h2>
+      <p class="big">I write folk horror and mythology inspired fiction that blends psychological horror, folklore and fantasy, always with a strong human element at its heart.</p>
+      <p>I live in Wiltshire, England, just ten minutes from Stonehenge, with my partner, two kids and our labradoodle, Sonic. I write, draw, paint and print, and I made the Mask of the Hare cover by hand.</p>
+      <div class="btns">
+        <a class="btn ghost" href="https://www.instagram.com/alex_darkfellwrites/">Instagram</a>
+        <a class="btn ghost" href="https://substack.com/@alexdarkfell">Substack</a>
+        <a class="btn ghost" href="https://www.goodreads.com/author/show/53772065.Alex_Darkfell">Goodreads</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band pulled" id="pulled">
+  <div class="wrap grid">
+    <div>
+      <h2>Pulled by hand</h2>
+      <p class="his">"To me, the cover is part of the story itself."<span>From my post on making the cover</span></p>
+      <p>The hare started as white chalk on black paper, then I cut it into lino and printed it by hand. Every print comes out a little different. The first run is 20 prints, and when they're gone, they're gone.</p>
+      <ul class="shop">
+        <li><a href="https://www.darkfellwrites.com/product-page/mask-of-the-hare-limited-edition-lino-print"><b>Limited edition lino print, A5, black ink</b><span>£20</span></a></li>
+        <li><a href="https://www.darkfellwrites.com/product-page/mask-of-the-hare-special-edition-signed-hardback"><b>Special edition signed hardback</b><span>£20</span></a></li>
+        <li><a href="https://www.darkfellwrites.com/shop-1"><b>Hardback and lino print together</b><span>£40</span></a></li>
+        <li><a href="https://www.darkfellwrites.com/shop-1"><b>Midnight and Epiphany, signed bundle</b><span>£20</span></a></li>
+      </ul>
+      <a class="btn" href="https://www.darkfellwrites.com/shop-1">The shop</a>
+      <p class="yalc">Or find me in person at <b>YALC London</b>, 31 October and 1 November 2026, with the Indie Rebels at tables 45 and 46.</p>
+    </div>
+    <img src="img/prints.jpg" alt="Four fresh Mask of the Hare lino prints on Alex's desk, the inked block beside them" width="900" height="992" loading="lazy">
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>A mockup made by Sparsh Saini for Alex Darkfell. Not affiliated, not live. The cover, prints, photos and words are the author's.</p>
+    <p><a class="quiet" href="#">Back to top</a></p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const hero = document.querySelector('.hero'), stage = hero.querySelector('.stage');
+  const block = hero.querySelector('.block'), sheet = hero.querySelector('.sheet');
+  const back = sheet.querySelector('.back'), print = sheet.querySelector('.print');
+  const title = print.querySelectorAll('.t, .a');
+  const confess = hero.querySelector('.confess'), copy = hero.querySelector('.copy');
+  const clamp = v => Math.min(1, Math.max(0, v));
+  const ease = t => t * t * (3 - 2 * t);
+  const out3 = t => 1 - Math.pow(1 - t, 3);
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let G = null;
+
+  const layout = () => {
+    const W = stage.clientWidth, H = stage.clientHeight, phone = W <= 760;
+    let bw, bh, px, py, bx, by;
+    if (phone) { bh = Math.min(H * .4, W * .62 * 1.5); bw = bh / 1.5; px = (W - bw) / 2; py = Math.max(H * .12, 100); bx = px; by = py + bh; }
+    else { bh = Math.min(H * .74, 720); bw = bh / 1.5; px = Math.max(W / 2 - bw - 30, W * .06); py = (H - bh) / 2 + H * .035; bx = px + bw; by = py; }
+    for (const el of [block, sheet]) { el.style.width = bw + 'px'; el.style.left = bx + 'px'; el.style.top = by + 'px'; }
+    // the sheet turns on the edge the print ends up beside: left on wide screens, top on phones
+    sheet.style.transformOrigin = phone ? '50% 0' : '0 50%';
+    back.style.transform = 'none';
+    print.style.transform = phone ? 'rotateX(180deg)' : 'rotateY(180deg)';
+    if (phone) { copy.style.left = '1.2rem'; copy.style.right = '1.2rem'; copy.style.top = (by + 22) + 'px'; copy.style.marginTop = '0'; }
+    else { copy.style.left = (bx + 56) + 'px'; copy.style.right = '3rem'; copy.style.top = (by + bh * .22) + 'px'; }
+    const k0 = Math.max(W / bw, H / bh) * 1.08;
+    G = { W, H, bw, bh, bx, by, phone, k0 };
+  };
+
+  const render = p => {
+    if (!G) layout();
+    const { W, H, bw, bh, bx, by, phone, k0 } = G;
+    // 1. the block fills the screen, then settles into its place on the desk
+    const z = ease(clamp((p - .03) / .27));
+    const k = Math.exp(Math.log(k0) * (1 - z));
+    const cx = W / 2 + (bx + bw / 2 - W / 2) * z, cy = H / 2 + (by + bh / 2 - H / 2) * z;
+    const tx = cx - bx - bw * k / 2, ty = cy - by - bh * k / 2;
+    const gone = ease(clamp((p - .68) / .14));
+    block.style.transform = `translate(${tx.toFixed(1)}px,${(ty + gone * bh * .04).toFixed(1)}px) scale(${(k * (1 - gone * .04)).toFixed(4)})`;
+    block.style.opacity = (1 - gone).toFixed(3);
+    // 2. a sheet comes down on the inked block
+    const d = out3(clamp((p - .27) / .12));
+    // 3. and peels off with the print on its underside
+    const f = ease(clamp((p - .42) / .28));
+    const lift = Math.sin(f * Math.PI) * (phone ? 40 : 70);
+    const rot = phone ? `rotateX(${(180 * f).toFixed(2)}deg)` : `rotateY(${(-180 * f).toFixed(2)}deg)`;
+    sheet.style.opacity = clamp(d * 1.6).toFixed(3);
+    sheet.style.transform = `translate3d(0,${(-(1 - d) * bh * .35).toFixed(1)}px,${lift.toFixed(1)}px) scale(${(1 + .1 * (1 - d)).toFixed(4)}) ${rot}`;
+    // which side of the sheet faces us: the blank back until it passes edge-on, then the print
+    const under = f > .5;
+    if (under !== G.under) { G.under = under; back.style.opacity = under ? '0' : '1'; print.style.opacity = under ? '1' : '0'; }
+    // 4. his title goes on last, as it did on the real cover
+    const t = ease(clamp((p - .72) / .1));
+    title.forEach(el => el.style.opacity = t.toFixed(3));
+    const c = ease(clamp((p - .04) / .12));
+    confess.style.opacity = (1 - c).toFixed(3);
+    confess.style.transform = `translateY(${(-c * 3).toFixed(2)}rem)`;
+    const e = ease(clamp((p - .78) / .14));
+    copy.style.opacity = e.toFixed(3);
+    copy.style.transform = `translateY(${((1 - e) * 1.4).toFixed(2)}rem)`;
+  };
+
+  const prog = () => { const run = hero.offsetHeight - innerHeight; return run > 0 ? clamp(-hero.getBoundingClientRect().top / run) : 1; };
+  addEventListener('resize', () => { G = null; render(reduced ? 1 : prog()); });
+  if (reduced) { document.documentElement.classList.add('still'); render(1); return; }
+  let ticking = false;
+  const update = () => { ticking = false; const p = prog(); hero.style.setProperty('--p', p.toFixed(4)); render(p); };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
+})();
+</script>
+</body>
+</html>
