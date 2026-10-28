@@ -325,17 +325,17 @@ footer p { margin: 0; }
     if (!G) layout();
     const { W, H, bw, bh, bx, by, phone, k0 } = G;
     // 1. the block fills the screen, then settles into its place on the desk
-    const z = ease(clamp((p - .03) / .27));
+    const z = ease(clamp((p - .03) / .23));
     const k = Math.exp(Math.log(k0) * (1 - z));
     const cx = W / 2 + (bx + bw / 2 - W / 2) * z, cy = H / 2 + (by + bh / 2 - H / 2) * z;
     const tx = cx - bx - bw * k / 2, ty = cy - by - bh * k / 2;
-    const gone = ease(clamp((p - .68) / .14));
+    const gone = ease(clamp((p - .64) / .14));
     block.style.transform = `translate(${tx.toFixed(1)}px,${(ty + gone * bh * .04).toFixed(1)}px) scale(${(k * (1 - gone * .04)).toFixed(4)})`;
     block.style.opacity = (1 - gone).toFixed(3);
     // 2. a sheet comes down on the inked block
-    const d = out3(clamp((p - .27) / .12));
+    const d = out3(clamp((p - .22) / .12));
     // 3. and peels off with the print on its underside
-    const f = ease(clamp((p - .42) / .28));
+    const f = ease(clamp((p - .36) / .3));
     const lift = Math.sin(f * Math.PI) * (phone ? 40 : 70);
     const rot = phone ? `rotateX(${(180 * f).toFixed(2)}deg)` : `rotateY(${(-180 * f).toFixed(2)}deg)`;
     sheet.style.opacity = clamp(d * 1.6).toFixed(3);
@@ -344,12 +344,12 @@ footer p { margin: 0; }
     const under = f > .5;
     if (under !== G.under) { G.under = under; back.style.opacity = under ? '0' : '1'; print.style.opacity = under ? '1' : '0'; }
     // 4. his title goes on last, as it did on the real cover
-    const t = ease(clamp((p - .72) / .1));
+    const t = ease(clamp((p - .68) / .1));
     title.forEach(el => el.style.opacity = t.toFixed(3));
     const c = ease(clamp((p - .04) / .12));
     confess.style.opacity = (1 - c).toFixed(3);
     confess.style.transform = `translateY(${(-c * 3).toFixed(2)}rem)`;
-    const e = ease(clamp((p - .78) / .14));
+    const e = ease(clamp((p - .74) / .14));
     copy.style.opacity = e.toFixed(3);
     copy.style.transform = `translateY(${((1 - e) * 1.4).toFixed(2)}rem)`;
   };
